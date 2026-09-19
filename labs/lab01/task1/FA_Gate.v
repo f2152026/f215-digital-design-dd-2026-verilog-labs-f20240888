@@ -16,9 +16,10 @@ module FA_Gate(
 );
   wire ps, pc1, pc2;
 
+  xor (sum, cin, ps); // thus proving that all statements in HDL code are executed in parallel.
   xor (ps,  a,   b);
   and (pc1, a,   b);
-  xor (sum, cin, ps);
+  // xor (sum, cin, ps);
   and (pc2, cin, ps);
   or  (cout, pc1, pc2);
 
