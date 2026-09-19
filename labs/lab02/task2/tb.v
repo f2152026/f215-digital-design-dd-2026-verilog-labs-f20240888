@@ -3,25 +3,44 @@
 
 module tb;
 
-  // TODO: declare the inputs and outputs
+    // Parameter configuration for override
+    localparam TEST_WIDTH = 8;
+    localparam TEST_DEPTH = 8;
 
-  // TODO: instantiate DUT here
+    // TODO: declare the inputs and outputs
+    reg  [$clog2(TEST_DEPTH)-1:0] t_sel;
+    wire [TEST_WIDTH-1:0]         t_dout;
 
-  // Waveform dump configuration (DO NOT CHANGE)
-  string vcd_file;
-  initial begin
-    if ($value$plusargs("vcd=%s", vcd_file)) begin
-      $dumpfile(vcd_file);
-      $dumpvars(0, DUT);
+    // TODO: instantiate DUT here with parameter override
+    lut #(
+        .WIDTH(TEST_WIDTH),
+        .DEPTH(TEST_DEPTH)
+    ) DUT (
+        .sel (t_sel),
+        .dout(t_dout)
+    );
+
+    // Waveform dump configuration (DO NOT CHANGE)
+    string vcd_file;
+    initial begin
+        if ($value$plusargs("vcd=%s", vcd_file)) begin
+            $dumpfile(vcd_file);
+            $dumpvars(0, DUT);
+        end
     end
-  end
 
-  initial begin
-    // TODO: apply different input combinations
+    // Apply all address combinations
+    integer k;
+    initial begin
+        // Initialize and cycle through all addresses 0 to DEPTH-1
+        for (k = 0; k < TEST_DEPTH; k = k + 1) begin
+            t_sel = k;
+            #5;
+        end
+        $finish;
+    end
 
-  end
-
-  initial
-    $monitor($time, " I0=%b I1=%b S=%b | Y=%b", t_i0, t_i1, t_s, t_y); // change as required
+    initial
+        $monitor($time, "  sel=%d (%b) | dout=%d (%b)", t_sel, t_sel, t_dout, t_dout);
 
 endmodule
