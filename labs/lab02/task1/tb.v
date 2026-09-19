@@ -9,7 +9,6 @@ module tb;
     // TODO: declare the three DUT inputs as the appropriate variable type.
     // Use exactly these names: t_i0, t_i1, t_s (needed by $monitor below).
     reg t_i0, t_i1, t_s;
-
     // TODO: declare the DUT output as the appropriate net type.
     // Use exactly this name: t_y (needed by $monitor below).
     wire t_y;
